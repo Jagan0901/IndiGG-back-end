@@ -71,25 +71,25 @@ export async function getParticipants(req) {
 //Tournaments
 
 
-export async function getTournamentsById(participantId) {
+export async function getTournamentsById(tournamentId) {
   return await client
     .db("IndiGG")
     .collection("tournaments")
-    .findOne({ id: participantId });
+    .findOne({ id: tournamentId });
 }
 
-export async function deleteTournamentsById(participantId) {
+export async function deleteTournamentsById(tournamentId) {
   return await client
     .db("IndiGG")
     .collection("tournaments")
-    .deleteOne({ id: participantId });
+    .deleteOne({ id: tournamentId });
 }
 
-export async function editTournamentById(participantId, updatedParticipant) {
+export async function editTournamentById(tournamentId, updatedTournament) {
   return await client
     .db("IndiGG")
     .collection("tournaments")
-    .updateOne({ id: participantId }, { $set: updatedParticipant });
+    .updateOne({ id: tournamentId }, { $set: updatedTournament });
 }
 
 export async function getTournaments(req) {
