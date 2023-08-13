@@ -23,3 +23,10 @@ export async function createUser(email, hashedPassword) {
     .collection("users")
     .insertOne({ email: email, password: hashedPassword });
 }
+
+export async function addTournament(id, name, image, startDate, endDate,participants) {
+  return await client
+    .db("IndiGG")
+    .collection("tournaments")
+    .insertOne({ id: id, name: name, image:image, startDate:startDate, endDate:endDate, participants:participants });
+}
