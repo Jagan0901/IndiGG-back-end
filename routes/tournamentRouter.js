@@ -11,8 +11,8 @@ router.post("/create", async(req,res)=>{
         return;
     }
     const id = Math.floor(Math.random() * 10000 + 1);
-    const tournaments = [];
-    const create = await addTournament(id,name,image,startDate,endDate,tournaments);
+    const participants = [];
+    const create = await addTournament(id,name,image,startDate,endDate,participants);
     res.send({message:"Created Successfully"})
 });
 
