@@ -37,3 +37,33 @@ export async function addParticipant(id, name, image, email, age, hobby) {
     .collection("participants")
     .insertOne({ id: id, name: name, image:image, email: email, age: age, hobby:hobby });
 }
+
+export async function getParticipantsById(participantId) {
+  return await client
+    .db("IndiGG")
+    .collection("participants")
+    .findOne({ id: participantId });
+}
+
+export async function deleteParticipantsById(participantId) {
+  return await client
+    .db("IndiGG")
+    .collection("participants")
+    .deleteOne({ id: participantId });
+}
+
+export async function editParticipantById(participantId, updatedParticipant) {
+  return await client
+    .db("IndiGG")
+    .collection("participants")
+    .updateOne({ id: participantId }, { $set: updatedParticipant });
+}
+
+
+export async function getParticipants(req) {
+  return await client
+    .db("IndiGG")
+    .collection("participants")
+    .find(req.query)
+    .toArray();
+}

@@ -1,5 +1,5 @@
 import express from "express";
-import { addParticipant } from "../helper.js";
+import { addParticipant, getParticipantsById, deleteParticipantsById, editParticipantById, getParticipants } from "../helper.js";
 
 
 const router = express.Router();
@@ -22,5 +22,49 @@ router.post("/create", async (req, res) => {
   const create = await addParticipant(id, name, image, email, age, hobby);
   res.send({ message: "Created Successfully" });
 });
+
+
+// participants/id
+router.get("/:participantId", async (req,res) => {
+  const {participantId} = req.params;
+  const id = +participantId;
+  const participant = await getParticipantsById(id);
+  // const participant = participants.find((mv) => mv.id == participantId)
+  participant ? res.send(participant) : res.status(404).send({error: "No participant Found"}); 
+});
+
+
+//Delete participant
+router.delete("/:participantId", async (req,res) => {
+  const {participantId} = req.params;
+  const id = +participantId
+  const participant = await deleteParticipantsById(id);
+  res.send(participant); 
+})
+
+//Update participant
+router.put("/:participantId", async(req,res) => {
+  const {participantId} = req.params;
+  const id = +participantId;
+  const updatedParticipant = req.body;
+
+  const edit = await editParticipantById(id, updatedParticipant);
+  res.send(edit)
+});
+
+
+//to get name,email
+router.get("/", async (req,res) => {
+  const {name,email} = req.query;
+ 
+  if(req.query.age){
+    req.query.age = +req.query.age
+  }
+  const participant = await getParticipants(req);
+  res.send(participant);
+})
+
+
+
 
 export const participantRouter = router;
