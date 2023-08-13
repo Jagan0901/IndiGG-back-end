@@ -30,3 +30,10 @@ export async function addTournament(id, name, image, startDate, endDate,particip
     .collection("tournaments")
     .insertOne({ id: id, name: name, image:image, startDate:startDate, endDate:endDate, participants:participants });
 }
+
+export async function addParticipant(id, name, image, email, age, hobby) {
+  return await client
+    .db("IndiGG")
+    .collection("participants")
+    .insertOne({ id: id, name: name, image:image, email: email, age: age, hobby:hobby });
+}

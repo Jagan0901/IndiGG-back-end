@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import { usersRouter } from "./routes/usersRouter.js";
 import { tournamentRouter } from "./routes/tournamentRouter.js";
+import { participantRouter } from "./routes/participantRouter.js";
 
 
 dotenv.config();
@@ -29,6 +30,7 @@ export const client = await createConnection();
 
 app.use("/users", usersRouter);
 app.use("/tournaments", tournamentRouter);
+app.use("/participants", participantRouter);
 
 app.get("/", (req, res) => {
   res.send(`Hi There !!!`);
