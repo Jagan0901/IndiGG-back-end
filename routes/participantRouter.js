@@ -90,7 +90,7 @@ router.post("/addParticipant", async(req,res)=>{
 
   const update = await updateParticipantArray(tournamentId,participantsArray);
 
-  res.send(update);
+  res.send({update:update, message:"Participant added Successfully"});
 });
 
 
