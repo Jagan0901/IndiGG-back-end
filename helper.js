@@ -99,3 +99,19 @@ export async function getTournaments(req) {
     .find(req.query)
     .toArray();
 }
+
+
+//add participant to tournament
+export async function getParticipantByNameAndEmail(name, email) {
+  return await client
+    .db("IndiGG")
+    .collection("participants")
+    .findOne({ name:name, email:email });
+}
+
+export async function updateParticipantArray(tournamentId, array) {
+  return await client
+    .db("IndiGG")
+    .collection("tournaments")
+    .updateOne({ id: tournamentId }, { $set: {participants:array} });
+}

@@ -1,5 +1,5 @@
 import express from "express";
-import { addParticipant, getParticipantsById, deleteParticipantsById, editParticipantById, getParticipants } from "../helper.js";
+import { addParticipant, getParticipantsById, deleteParticipantsById, editParticipantById, getParticipants, getParticipantByNameAndEmail, getTournamentsById, updateParticipantArray } from "../helper.js";
 
 
 const router = express.Router();
@@ -63,6 +63,35 @@ router.get("/", async (req,res) => {
   const participant = await getParticipants(req);
   res.send(participant);
 })
+
+
+//to add participant to the tournament
+router.post("/addParticipant", async(req,res)=>{
+  let {name,email,tournamentId} = req.body;
+  const isParticipantExists = await getParticipantByNameAndEmail(name,email);
+  if(!isParticipantExists){
+    res.status(400).send({error:"Participant not added in the Participant List. Please Check and Enter added Participant"});
+    return;
+  }
+
+  const participantId = +(isParticipantExists.id);
+
+  if(tournamentId){
+    tournamentId = +tournamentId;
+  }
+  const getTournament = await getTournamentsById(tournamentId);
+  if(!getTournament){
+    res.status(400).send({error:"Tournament doesn't exists. Please Create"});
+    return;
+  }
+
+  let participantsArray =  [...(getTournament.participants)];
+  participantsArray.push(participantId);
+
+  const update = await updateParticipantArray(tournamentId,participantsArray);
+
+  res.send(update);
+});
 
 
 
